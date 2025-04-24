@@ -1,8 +1,8 @@
 {
   "info": {
-    "name": "Kuteeram Service Booking",
-    "_postman_id": "12345-abcdef-67890-ghijkl",
-    "description": "Collection to test auth, services, and bookings APIs",
+    "name": "Kuteeram Service Booking - LIVE",
+    "_postman_id": "kuteeram-live-collection-01",
+    "description": "Fully working collection using kutareem-fullstack.onrender.com",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -15,7 +15,12 @@
           "mode": "raw",
           "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
         },
-        "url": { "raw": "{{base_url}}/api/auth/register", "host": ["{{base_url}}"], "path": ["api","auth","register"] }
+        "url": {
+          "raw": "https://kutareem-fullstack.onrender.com/api/auth/register",
+          "protocol": "https",
+          "host": ["kutareem-fullstack", "onrender", "com"],
+          "path": ["api", "auth", "register"]
+        }
       }
     },
     {
@@ -27,17 +32,22 @@
           "mode": "raw",
           "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
         },
-        "url": { "raw": "{{base_url}}/api/auth/login", "host": ["{{base_url}}"], "path": ["api","auth","login"] }
+        "url": {
+          "raw": "https://kutareem-fullstack.onrender.com/api/auth/login",
+          "protocol": "https",
+          "host": ["kutareem-fullstack", "onrender", "com"],
+          "path": ["api", "auth", "login"]
+        }
       },
       "event": [
         {
           "listen": "test",
           "script": {
             "exec": [
-              "// save token for auth",
               "var jsonData = pm.response.json();",
               "pm.environment.set(\"jwt_token\", jsonData.token);"
-            ]
+            ],
+            "type": "text/javascript"
           }
         }
       ]
@@ -52,16 +62,26 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"title\": \"AC Repair\",\n  \"description\": \"Expert AC repair service\",\n  \"price\": 499\n}"
+          "raw": "{\n  \"title\": \"AC Repair\",\n  \"description\": \"Expert AC repair\",\n  \"price\": 499\n}"
         },
-        "url": { "raw": "{{base_url}}/api/services", "host": ["{{base_url}}"], "path": ["api","services"] }
+        "url": {
+          "raw": "https://kutareem-fullstack.onrender.com/api/services",
+          "protocol": "https",
+          "host": ["kutareem-fullstack", "onrender", "com"],
+          "path": ["api", "services"]
+        }
       }
     },
     {
       "name": "Get All Services",
       "request": {
         "method": "GET",
-        "url": { "raw": "{{base_url}}/api/services", "host": ["{{base_url}}"], "path": ["api","services"] }
+        "url": {
+          "raw": "https://kutareem-fullstack.onrender.com/api/services",
+          "protocol": "https",
+          "host": ["kutareem-fullstack", "onrender", "com"],
+          "path": ["api", "services"]
+        }
       }
     },
     {
@@ -72,16 +92,31 @@
           { "key": "Content-Type", "value": "application/json" },
           { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
         ],
-        "body": { "mode": "raw", "raw": "{\n  \"serviceId\": \"<SERVICE_ID>\"\n}" },
-        "url": { "raw": "{{base_url}}/api/bookings", "host": ["{{base_url}}"], "path": ["api","bookings"] }
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"serviceId\": \"661d5a7b923f3b3b1a4c1234\"\n}"
+        },
+        "url": {
+          "raw": "https://kutareem-fullstack.onrender.com/api/bookings",
+          "protocol": "https",
+          "host": ["kutareem-fullstack", "onrender", "com"],
+          "path": ["api", "bookings"]
+        }
       }
     },
     {
       "name": "Get My Bookings",
       "request": {
         "method": "GET",
-        "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
-        "url": { "raw": "{{base_url}}/api/bookings", "host": ["{{base_url}}"], "path": ["api","bookings"] }
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "url": {
+          "raw": "https://kutareem-fullstack.onrender.com/api/bookings",
+          "protocol": "https",
+          "host": ["kutareem-fullstack", "onrender", "com"],
+          "path": ["api", "bookings"]
+        }
       }
     },
     {
@@ -94,10 +129,21 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"bookingId\": \"<BOOKING_ID>\",\n  \"status\": \"confirmed\"\n}"
+          "raw": "{\n  \"bookingId\": \"662e5b2e9c8e8f2f6a3d5678\",\n  \"status\": \"confirmed\"\n}"
         },
-        "url": { "raw": "{{base_url}}/api/bookings/status", "host": ["{{base_url}}"], "path": ["api","bookings","status"] }
+        "url": {
+          "raw": "https://kutareem-fullstack.onrender.com/api/bookings/status",
+          "protocol": "https",
+          "host": ["kutareem-fullstack", "onrender", "com"],
+          "path": ["api", "bookings", "status"]
+        }
       }
+    }
+  ],
+  "variable": [
+    {
+      "key": "jwt_token",
+      "value": ""
     }
   ]
 }
