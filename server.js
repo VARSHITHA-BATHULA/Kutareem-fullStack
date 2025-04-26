@@ -16,6 +16,9 @@ app.use(express.json());
 app.use(cookieParser()); // Use cookie parser middleware
 
 connectDB();
+app.get("/", (req, res) => {
+  res.send("Welcome to the API. Please refer to the documentation.");
+});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/services", serviceRoutes);
