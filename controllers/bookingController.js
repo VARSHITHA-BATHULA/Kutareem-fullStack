@@ -1,19 +1,27 @@
 import Booking from "../models/Booking.js";
 import Service from "../models/Service.js";
+import mongoose from "mongoose";
 
 export const bookService = async (req, res, next) => {
   try {
-    const { serviceId } = req.body;
+    const { service } = req.body; // <-- notice this is 'service', not 'serviceId'
+    console.log("Service received from body:", service);
 
-    const service = await Service.findById(serviceId);
-    if (!service) {
+    // Validate the service ID
+    if (!mongoose.Types.ObjectId.isValid(service)) {
+      res.status(400);
+      throw new Error("Invalid service ID format");
+    }
+
+    const foundService = await Service.findById(service);
+    if (!foundService) {
       res.status(404);
       throw new Error("Service not found");
     }
 
     const booking = await Booking.create({
-      service: serviceId,
-      user: req.user._id,
+      service: service,
+      user: req.user, // Assuming req.user is populated
     });
 
     res.status(201).json(booking);
@@ -24,7 +32,7 @@ export const bookService = async (req, res, next) => {
 
 export const getUserBookings = async (req, res, next) => {
   try {
-    const bookings = await Booking.find({ user: req.user._id })
+    const bookings = await Booking.find({ user: req.user }) // Use the userId from protect middleware
       .populate("service")
       .sort({ createdAt: -1 });
 

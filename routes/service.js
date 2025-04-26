@@ -7,8 +7,8 @@ import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", protect, createService);
+router.post("/", protect, createService); // Create a service
 
-router.get("/", getAllServices);
+router.get("/", getAllServices); // Fetch all services
 
 export default router;
